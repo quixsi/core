@@ -1,0 +1,11 @@
+package components
+
+type H1Props struct {
+	class string
+}
+
+templ H1(attrs templ.Attributes) {
+	<h1 { attrs... }>
+		{ children... }
+	</h1>
+}

@@ -1,0 +1,37 @@
+package components
+
+type DrawerToggle struct {
+	Id string
+}
+
+type Drawer struct {
+	Toggle DrawerToggle
+}
+
+templ (drawer Drawer) DrawerToggle(attrs templ.Attributes) {
+	<label { attrs... } for={ drawer.Toggle.Id }>
+		{ children... }
+	</label>
+}
+
+templ (drawer Drawer) DrawerSide() {
+	<div class="drawer-side h-[100vh] fixed top-0">
+		<label for={ drawer.Toggle.Id } aria-label="close sidebar" class="drawer-overlay !cursor-auto "></label>
+		<div class="h-full max-w-[65vw] w-fit bg-base-200">
+			{ children... }
+		</div>
+	</div>
+}
+
+templ (drawer Drawer) DrawerPageContent() {
+	<div class="drawer-content">
+		{ children... }
+	</div>
+}
+
+templ (drawer Drawer) Drawer() {
+	<div class="drawer">
+		<input id={ drawer.Toggle.Id } type="checkbox" class="drawer-toggle"/>
+		{ children... }
+	</div>
+}

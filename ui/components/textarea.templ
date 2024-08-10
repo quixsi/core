@@ -1,0 +1,19 @@
+package components
+
+type TextareaProps struct {
+	Label       string
+	Description string
+	Id          string
+}
+
+templ Textarea(props TextareaProps, attrs templ.Attributes) {
+	<label class="form-control">
+		<div class="label">
+			<span class="label-text">{ props.Label }</span>
+		</div>
+		<textarea class="textarea textarea-bordered h-24" { attrs... }></textarea>
+		<div class="label">
+			<span class="label-text-alt">{ props.Description }</span>
+		</div>
+	</label>
+}

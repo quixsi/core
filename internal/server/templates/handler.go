@@ -31,6 +31,8 @@ import (
 	"github.com/quixsi/core/internal/db"
 	"github.com/quixsi/core/internal/model"
 	"github.com/quixsi/core/internal/parser/form"
+
+	componentDocs "github.com/quixsi/core/ui/views/docs/components"
 )
 
 //go:embed *.html
@@ -1117,4 +1119,109 @@ func evalTemplateUnsafe(msg string, data any) (string, error) {
 		return "", err
 	}
 	return buf.String(), nil
+}
+
+func DocsComponentsHandler(c *gin.Context) {
+	var span trace.Span
+	ctx := c.Request.Context()
+	ctx, span = tracer.Start(ctx, "DocsComponentsHandler.Get")
+	defer span.End()
+
+	page := componentDocs.Components()
+	err := page.Render(ctx, c.Writer)
+	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, "unable to render component docs")
+		return
+	}
+}
+
+func DocsButtonDetailsHandler(c *gin.Context) {
+	var span trace.Span
+	ctx := c.Request.Context()
+	ctx, span = tracer.Start(ctx, "DocsButtonDetailsHandler.Get")
+	defer span.End()
+
+	page := componentDocs.ButtonDetailedDocs()
+	err := page.Render(ctx, c.Writer)
+	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, "unable to render detailed button component docs")
+		return
+	}
+}
+
+func DocsInputDetailsHandler(c *gin.Context) {
+	var span trace.Span
+	ctx := c.Request.Context()
+	ctx, span = tracer.Start(ctx, "DocsInputDetailsHandler.Get")
+	defer span.End()
+
+	page := componentDocs.InputDetailedDocs()
+	err := page.Render(ctx, c.Writer)
+	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, "unable to render detailed input component docs")
+		return
+	}
+}
+
+func DocsTextareaDetailsHandler(c *gin.Context) {
+	var span trace.Span
+	ctx := c.Request.Context()
+	ctx, span = tracer.Start(ctx, "DocsTextareaDetailsHandler.Get")
+	defer span.End()
+
+	page := componentDocs.TextareaDetailedDocs()
+	err := page.Render(ctx, c.Writer)
+	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, "unable to render detailed textarea component docs")
+		return
+	}
+}
+
+func DocsSelectDetailsHandler(c *gin.Context) {
+	var span trace.Span
+	ctx := c.Request.Context()
+	ctx, span = tracer.Start(ctx, "DocsSelectDetailsHandler.Get")
+	defer span.End()
+
+	page := componentDocs.SelectDetailedDocs()
+	err := page.Render(ctx, c.Writer)
+	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, "unable to render detailed select component docs")
+		return
+	}
+}
+
+func DocsSwitchDetailsHandler(c *gin.Context) {
+	var span trace.Span
+	ctx := c.Request.Context()
+	ctx, span = tracer.Start(ctx, "DocsSwitchDetailsHandler.Get")
+	defer span.End()
+
+	page := componentDocs.SwitchDetailedDocs()
+	err := page.Render(ctx, c.Writer)
+	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, "unable to render detailed switch component docs")
+		return
+	}
+}
+
+func DocsCheckboxDetailsHandler(c *gin.Context) {
+	var span trace.Span
+	ctx := c.Request.Context()
+	ctx, span = tracer.Start(ctx, "DocsCheckboxDetailsHandler.Get")
+	defer span.End()
+
+	page := componentDocs.CheckboxDetailedDocs()
+	err := page.Render(ctx, c.Writer)
+	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, "unable to render detailed checkbox component docs")
+		return
+	}
 }

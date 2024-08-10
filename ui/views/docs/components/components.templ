@@ -1,0 +1,247 @@
+package docs
+
+import (
+	components "github.com/quixsi/core/ui/components"
+	views "github.com/quixsi/core/ui/views"
+)
+
+templ ComponentCollection() {
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 list-none justify-items-center place-content-center">
+		@Button()
+		@Input()
+		@Textarea()
+		@Select()
+		@Switch()
+		@Checkbox()
+	</div>
+}
+
+var drawer = components.Drawer{
+	Toggle: components.DrawerToggle{
+		Id: "body__drawer",
+	},
+}
+
+templ Components() {
+	@views.Page("Components") {
+		<main class="p-0 m-0 relative">
+			@drawer.Drawer() {
+				@drawer.DrawerPageContent() {
+					@components.Hero(components.HeroProps{
+						Heading: components.HeroHeadingProps{
+							Title:     "Quixsi Components",
+							ClassName: "bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text",
+						},
+					}) {
+						<div class="w-full flex flex-col items-center justify-center">
+							<p class="p-6">
+								A collection of { " " }
+								@components.Link(templ.Attributes{
+									"href":   "https://templ.guide/",
+									"target": "_blank",
+								}) {
+									templ
+								}
+								{ " " } components based on { " " }
+								@components.Link(templ.Attributes{
+									"href":   "https://daisyui.com/",
+									"target": "_blank",
+								}) {
+									DaisyUI
+								}
+								.
+							</p>
+							@components.Link(templ.Attributes{"href": "#component-collection"}) {
+								@components.Button(components.ButtonProps{
+									Variant: components.ButtonVariantPrimary,
+								}, templ.Attributes{}) {
+									Check them out
+								}
+							}
+						</div>
+					}
+					<section id="component-collection" class="p-6 flex flex-col items-center">
+						@ComponentCollection()
+					</section>
+				}
+				@drawer.DrawerSide() {
+					<div class="p-6 w-full h-full">
+						<div id="component-details">
+							<!-- hx-target -->
+						</div>
+					</div>
+				}
+			}
+		</main>
+	}
+}
+
+templ ComponentPreview() {
+	<div class="min-h-32 flex items-center justify-center">
+		{ children... }
+	</div>
+}
+
+var ButtonCard = components.Card{
+	Title:       "Button",
+	Description: "Buttons allow the user to take actions or make choices.",
+}
+
+templ Button() {
+	@ButtonCard.Card() {
+		@ComponentPreview() {
+			@components.Button(components.ButtonProps{
+				Variant: components.ButtonVariantPrimary,
+			}, templ.Attributes{}) {
+				Click
+			}
+		}
+		@ButtonCard.CardBody() {
+			@ButtonCard.CardDescription()
+			@ButtonCard.CardActions() {
+				@drawer.DrawerToggle(templ.Attributes{"hx-get": "/docs/components/button", "hx-target": "#component-details"}) {
+					@components.Link(templ.Attributes{}) {
+						->
+					}
+				}
+			}
+		}
+	}
+}
+
+var InputCard = components.Card{
+	Title:       "Input",
+	Description: "Input is a simple input field to enter text information.",
+}
+
+templ Input() {
+	@InputCard.Card() {
+		@ComponentPreview() {
+			@components.Input(components.InputProps{
+				Description: "Enter your full name",
+				Label:       "Name",
+			}, templ.Attributes{})
+		}
+		@InputCard.CardBody() {
+			@InputCard.CardDescription()
+			@InputCard.CardActions() {
+				@drawer.DrawerToggle(templ.Attributes{"hx-get": "/docs/components/input", "hx-target": "#component-details"}) {
+					@components.Link(templ.Attributes{}) {
+						->
+					}
+				}
+			}
+		}
+	}
+}
+
+var TextareaCard = components.Card{
+	Title:       "Textarea",
+	Description: "Textarea allows users to enter text in multiple lines.",
+}
+
+templ Textarea() {
+	@TextareaCard.Card() {
+		@ComponentPreview() {
+			@components.Textarea(components.TextareaProps{
+				Label:       "Message",
+				Description: "Leave us a message.",
+			}, templ.Attributes{})
+		}
+		@TextareaCard.CardBody() {
+			@TextareaCard.CardDescription()
+			@TextareaCard.CardActions() {
+				@drawer.DrawerToggle(templ.Attributes{"hx-get": "/docs/components/textarea", "hx-target": "#component-details"}) {
+					@components.Link(templ.Attributes{}) {
+						->
+					}
+				}
+			}
+		}
+	}
+}
+
+var SelectCard = components.Card{
+	Title:       "Select",
+	Description: "Select is used to pick a value from a list of options.",
+}
+
+templ Select() {
+	@SelectCard.Card() {
+		@ComponentPreview() {
+			@components.Select(components.SelectProps{
+				Id:          "select-example",
+				Label:       "Size",
+				Placeholder: "Select your size",
+				Description: "If your size is out of stock, leave us a message.",
+				Options: []components.OptionType{
+					{Value: "xs", Label: "XS"},
+					{Value: "s", Label: "M"},
+					{Value: "l", Label: "L"},
+					{Value: "xl", Label: "XL"},
+					{Value: "xxl", Label: "XXL"},
+				},
+			}, templ.Attributes{})
+		}
+		@SelectCard.CardBody() {
+			@SelectCard.CardDescription()
+			@SelectCard.CardActions() {
+				@drawer.DrawerToggle(templ.Attributes{"hx-get": "/docs/components/select", "hx-target": "#component-details"}) {
+					@components.Link(templ.Attributes{}) {
+						->
+					}
+				}
+			}
+		}
+	}
+}
+
+var SwitchCard = components.Card{
+	Title:       "Switch",
+	Description: "Switch is a checkbox that is styled to look like a switch button.",
+}
+
+templ Switch() {
+	@SwitchCard.Card() {
+		@ComponentPreview() {
+			@components.Switch(components.SwitchProps{
+				Label: "Remember me",
+			})
+		}
+		@SwitchCard.CardBody() {
+			@SwitchCard.CardDescription()
+			@SwitchCard.CardActions() {
+				@drawer.DrawerToggle(templ.Attributes{"hx-get": "/docs/components/switch", "hx-target": "#component-details"}) {
+					@components.Link(templ.Attributes{}) {
+						->
+					}
+				}
+			}
+		}
+	}
+}
+
+var CheckboxCard = components.Card{
+	Title:       "Checkbox",
+	Description: "Checkboxes are used to select or deselect a value.",
+}
+
+templ Checkbox() {
+	@CheckboxCard.Card() {
+		@ComponentPreview() {
+			@components.Checkbox(components.CheckboxProps{
+				Label: "I want to receive the newsletter.",
+			})
+		}
+		@CheckboxCard.CardBody() {
+			@CheckboxCard.CardDescription()
+			@CheckboxCard.CardActions() {
+				@drawer.DrawerToggle(templ.Attributes{"hx-get": "/docs/components/checkbox", "hx-target": "#component-details"}) {
+					@components.Link(templ.Attributes{}) {
+						->
+					}
+				}
+			}
+		}
+	}
+}

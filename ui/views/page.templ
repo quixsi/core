@@ -1,0 +1,28 @@
+package views
+
+// import "github.com/quixsi/core/ui/components"
+templ Page(title string) {
+	<!DOCTYPE html>
+	<html class="scroll-smooth">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<link
+				rel="icon"
+				href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>"
+			/>
+			<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.5/dist/utilities.min.css"/>
+			<title>{ title }</title>
+			<script src="https://unpkg.com/htmx.org@1.9.5"></script>
+			<script src="https://cdn.tailwindcss.com"></script>
+			<link
+				href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.css"
+				rel="stylesheet"
+				type="text/css"
+			/>
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
+}
