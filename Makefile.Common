@@ -2,9 +2,15 @@
 ROOT_DIR=$(shell git rev-parse --show-toplevel)
 TOOLS_DIR=$(ROOT_DIR)/.tools
 LETS_PARTY := $(ROOT_DIR)/bin/lets-party
+TEMPL_GENERATED_FILE_PATTERN="*_templ.go"
 
-# Returns all .go-files
-ALL_GO_FILES=$(shell find $(ROOT_DIR) -type f -name "*.go")
+# Returns all .go-files, exclude generated _templ.go files
+ALL_GO_FILES=$(shell find $(ROOT_DIR) -type f -name "*.go" ! -name "${TEMPL_GENERATED_FILE_PATTERN}")
+ALL_TEMPL_FILES=$(shell find $(ROOT_DIR) -type f -name "*.templ")
+
+# Relevant files for license
+LICENSED_FILES=$(ALL_GO_FILES)
+LICENSED_FILES+=$(ALL_TEMPL_FILES)
 
 # Set tool-paths for easier access
 LINT := $(TOOLS_DIR)/golangci-lint

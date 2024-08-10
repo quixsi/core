@@ -64,21 +64,24 @@ gotidy:
 
 .PHONY: check-licensehead
 check-licensehead:
-	@for f in $(ALL_GO_FILES); do \
-			first_line=$$(sed -n '1p' "$$f"); \
-			second_line=$$(sed -n '2p' "$$f"); \
-			if [ "$$first_line" != "$(LICENSEHEAD_FIRST_LINE)" ] || [ "$$second_line" != "$(LICENSEHEAD_SECOND_LINE)" ]; then \
-				echo "Error: License header mismatch in $$f"; \
-				exit 1; \
-			else \
-				echo "Check: License header checked in $$f"; \
-			fi \
-		done; \
-		echo "License headers checked successfully."
+	@is_successful=true; \
+	for f in $(LICENSED_FILES); do \
+		first_line=$$(sed -n '1p' "$$f"); \
+		second_line=$$(sed -n '2p' "$$f"); \
+		if [ "$$first_line" != "$(LICENSEHEAD_FIRST_LINE)" ] || [ "$$second_line" != "$(LICENSEHEAD_SECOND_LINE)" ]; then \
+			echo "\x1b[31mError: License header mismatch in $$f\x1b[0m"; \
+			is_successful=false; \
+		else \
+			echo "Check: License header checked in $$f"; \
+		fi; \
+	done; \
+	if [ "$$is_successful" != true ]; then \
+		exit 1; \
+	fi
 
 .PHONY: licensehead
 licensehead: deletehead
-	@for f in $(ALL_GO_FILES); do \
+	@for f in $(LICENSED_FILES); do \
 			first_line=$$(sed -n '1p' "$$f"); \
 			second_line=$$(sed -n '2p' "$$f"); \
 			if [ "$$first_line" != "$(LICENSEHEAD_FIRST_LINE)" ] || [ "$$second_line" != "$(LICENSEHEAD_SECOND_LINE)" ]; then \
@@ -94,7 +97,7 @@ licensehead: deletehead
 
 .PHONY: deletehead
 deletehead:
-	@for f in $(ALL_GO_FILES); do \
+	@for f in $(LICENSED_FILES); do \
 			if [ "$$(sed -n '1p' "$$f" | grep '^//')" ] && [ "$$(sed -n '2p' "$$f" | grep '^//')" ]; then \
 				if [ -z "$$(sed -n '3p' "$$f")" ]; then \
 					sed -i '1,3d' "$$f"; \
