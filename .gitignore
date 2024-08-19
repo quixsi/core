@@ -1,6 +1,3 @@
 # binaries for programs / plugins
 bin/
 .tools/
-
-# templ generated files
-*_templ.go
