@@ -60,7 +60,7 @@ func main() {
 		grpcOptions := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock()}
 		conn, err := grpc.DialContext(ctx, *otlpAddr, grpcOptions...)
 		if err != nil {
-			logger.Error("failed to create gRPC connection to collector", err)
+			logger.Error("failed to create gRPC connection to collector", "error", err)
 			os.Exit(1)
 		}
 		defer conn.Close()
@@ -68,7 +68,7 @@ func main() {
 		// Set up a trace exporter
 		otelExporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithGRPCConn(conn))
 		if err != nil {
-			logger.Error("failed to create trace exporter", err)
+			logger.Error("failed to create trace exporter", "error", err)
 			os.Exit(1)
 		}
 		tp := sdktrace.NewTracerProvider(sdktrace.WithSyncer(otelExporter))
@@ -81,7 +81,7 @@ func main() {
 		dline, err = time.Parse(time.RFC822, *deadline)
 		logger.Info("deadline set to", "date", *deadline)
 		if err != nil {
-			logger.Error("failed to parse deadline", err)
+			logger.Error("failed to parse deadline", "error", err)
 			os.Exit(1)
 		}
 	}
