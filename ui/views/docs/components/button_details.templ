@@ -1,0 +1,30 @@
+// Copyright (C) 2024 the quixsi maintainers
+// See root-dir/LICENSE for more information
+
+package docs
+
+import (
+	components "github.com/quixsi/core/ui/components"
+)
+
+templ ButtonDetailedDocs() {
+	@components.H1(templ.Attributes{"class": "text-4xl font-bold"}) {
+		Button
+	}
+	@components.Button(components.ButtonProps{
+		Variant: components.ButtonVariantPrimary,
+	}, templ.Attributes{}) {
+		Click
+	}
+	@components.Button(components.ButtonProps{
+		Variant: components.ButtonVariantSecondary,
+	}, templ.Attributes{}) {
+		Click
+	}
+	@components.Button(components.ButtonProps{
+		Variant: components.ButtonVariantTertiary,
+	}, templ.Attributes{}) {
+		Click
+	}
+	<i>More coming soon...</i>
+}

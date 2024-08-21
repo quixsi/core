@@ -1,0 +1,40 @@
+// Copyright (C) 2024 the quixsi maintainers
+// See root-dir/LICENSE for more information
+
+package components
+
+type OptionType struct {
+	Value string
+	Label string
+}
+
+type SelectProps struct {
+	Id          string
+	Label       string
+	Description string
+	Placeholder string
+	Options     []OptionType
+	Value       string
+}
+
+templ Select(props SelectProps, attrs templ.Attributes) {
+	<label class="form-control w-full max-w-xs">
+		<div class="label">
+			<span class="label-text">{ props.Label }</span>
+		</div>
+		<select class="select select-bordered" value={ props.Value } defaultValue="default">
+			<option value="default" disabled selected>{ props.Placeholder }</option>
+			for _, option := range props.Options {
+				<option
+					value={ option.Value }
+					selected?={ props.Value == option.Value }
+				>
+					{ option.Label }
+				</option>
+			}
+		</select>
+		<div class="label">
+			<span class="label-text-alt">{ props.Description }</span>
+		</div>
+	</label>
+}

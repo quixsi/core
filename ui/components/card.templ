@@ -1,0 +1,32 @@
+// Copyright (C) 2024 the quixsi maintainers
+// See root-dir/LICENSE for more information
+
+package components
+
+type Card struct {
+	Title       string
+	Description string
+}
+
+templ (card Card) Card() {
+	<div class="card card-bordered bg-base-100 w-full shadow-xl p-6">
+		{ children... }
+	</div>
+}
+
+templ (card Card) CardBody() {
+	<div class="card-body">
+		<h2 class="card-title">{ card.Title }</h2>
+		{ children... }
+	</div>
+}
+
+templ (card Card) CardDescription() {
+	<p>{ card.Description }</p>
+}
+
+templ (card Card) CardActions() {
+	<div class="card-actions justify-end">
+		{ children... }
+	</div>
+}

@@ -1,0 +1,30 @@
+// Copyright (C) 2024 the quixsi maintainers
+// See root-dir/LICENSE for more information
+
+package components
+
+type ButtonVariant = string
+
+const (
+	ButtonVariantPrimary   ButtonVariant = "btn-primary"
+	ButtonVariantSecondary               = "btn-secondary"
+	ButtonVariantTertiary                = "btn-ghost"
+)
+
+type ButtonProps struct {
+	Class   string
+	Variant ButtonVariant
+	Outline bool
+}
+
+templ Button(props ButtonProps, attrs templ.Attributes) {
+	<button
+		{ attrs... }
+		class={ "btn",
+			templ.KV("btn-outline", props.Outline),
+			props.Variant,
+			props.Class }
+	>
+		{ children... }
+	</button>
+}

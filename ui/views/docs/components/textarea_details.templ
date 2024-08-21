@@ -1,0 +1,15 @@
+// Copyright (C) 2024 the quixsi maintainers
+// See root-dir/LICENSE for more information
+
+package docs
+
+import (
+	components "github.com/quixsi/core/ui/components"
+)
+
+templ TextareaDetailedDocs() {
+	@components.H1(templ.Attributes{"class": "text-4xl font-bold"}) {
+		Textarea
+	}
+	<i>More coming soon...</i>
+}

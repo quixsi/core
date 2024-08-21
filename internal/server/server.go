@@ -86,6 +86,8 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		password = v
 	}
 
+	docsArea := mux.Group("/docs")
+
 	adminArea := mux.Group("/admin")
 	adminArea.Use(append(middlewares, gin.BasicAuth(gin.Accounts{
 		username: password,
@@ -127,6 +129,14 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	translations := templates.NewTranslationHandler(s.tStore)
 	adminArea.POST("/translations", translations.UpdateLanguage)
+
+	docsArea.GET("/components", templates.DocsComponentsHandler)
+	docsArea.GET("/components/button", templates.DocsButtonDetailsHandler)
+	docsArea.GET("/components/input", templates.DocsInputDetailsHandler)
+	docsArea.GET("/components/textarea", templates.DocsTextareaDetailsHandler)
+	docsArea.GET("/components/select", templates.DocsSelectDetailsHandler)
+	docsArea.GET("/components/switch", templates.DocsSwitchDetailsHandler)
+	docsArea.GET("/components/checkbox", templates.DocsCheckboxDetailsHandler)
 
 	mux.NoRoute(notFound)
 

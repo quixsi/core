@@ -60,6 +60,9 @@ jobs:
       - name: Install tools
         run: make tools
 
+      - name: Generate
+        run: make generate
+
       - name: Lint code
         run: make golint
 
@@ -79,6 +82,9 @@ jobs:
 
       - name: Install tools format
         run: make tools
+
+      - name: Generate
+        run: make generate
 
       - name: Check format
         run: make check-fmt
@@ -108,6 +114,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
+
+      - name: Install tools
+        run: make tools
+
+      - name: Generate
+        run: make generate
 
       - name: Test Go-version @version
         if: startsWith( matrix.go-version , needs.go-versions.outputs.version )

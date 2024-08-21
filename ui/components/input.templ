@@ -1,0 +1,21 @@
+// Copyright (C) 2024 the quixsi maintainers
+// See root-dir/LICENSE for more information
+
+package components
+
+type InputProps struct {
+	Label       string
+	Description string
+}
+
+templ Input(props InputProps, attrs templ.Attributes) {
+	<label class="form-control w-full max-w-xs">
+		<div class="label">
+			<span class="label-text">{ props.Label }</span>
+		</div>
+		<input type="text" class="input input-bordered w-full max-w-xs" { attrs... }/>
+		<div class="label">
+			<span class="label-text-alt">{ props.Description }</span>
+		</div>
+	</label>
+}
