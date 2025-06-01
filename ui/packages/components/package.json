@@ -23,7 +23,10 @@
     "./styles": "./src/index.css"
   },
   "imports": {
-    "#*": "./src/*"
+    "#lib/utils": {
+      "import": "./src/lib/utils.ts",
+      "default": "./src/lib/utils.ts"
+    }
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.8",
