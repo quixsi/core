@@ -1,0 +1,11 @@
+{
+  "name": "ui",
+  "private": true,
+  "version": "0.0.1",
+  "description": "UI workspaces",
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": {
+    "node": "^22.15.1",
+    "npm": "^10.9.2"
+  }
+}
