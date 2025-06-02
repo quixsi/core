@@ -32,8 +32,5 @@
     "lib": ["es2022", "dom", "dom.iterable"],
 
     "baseUrl": ".",
-    "paths": {
-      "#*": ["./src/*"]
-    }
   }
 }

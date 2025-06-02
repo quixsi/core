@@ -20,6 +20,10 @@
       "types": "./src/ui/checkbox/index.ts",
       "import": "./src/ui/checkbox/index.ts"
     },
+    "./card": {
+      "types": "./src/ui/card/index.ts",
+      "import": "./src/ui/card/index.ts"
+    },
     "./styles": "./src/index.css"
   },
   "imports": {
