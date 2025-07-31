@@ -40,9 +40,6 @@ clean/all: clean
 deps:
 	@go mod download
 
-# Include UI Makefile with ui/ prefix
+# UI targets with ui/ prefix
 ui/%:
 	@make -C ui $(*)
-
-# Import all UI targets
-include ui/Makefile

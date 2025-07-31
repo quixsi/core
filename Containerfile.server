@@ -1,0 +1,39 @@
+# Multi-stage build for Go server
+FROM golang:1.24-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy go mod files
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy source code
+COPY cmd/ cmd/
+COPY internal/ internal/
+
+# Build the server binary (static linking)
+RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -o server ./cmd/server
+
+# Create passwd file for non-root user
+RUN echo "appuser:x:1001:1001::/:" > /tmp/passwd
+
+# Final stage - scratch (minimal possible container)
+FROM scratch
+
+# Copy passwd file for user info
+COPY --from=builder /tmp/passwd /etc/passwd
+
+# Copy binary
+COPY --from=builder /app/server /server
+
+# Switch to non-root user
+USER 1001:1001
+
+# Expose port
+EXPOSE 8080
+
+# Run the server
+CMD ["/server"]
