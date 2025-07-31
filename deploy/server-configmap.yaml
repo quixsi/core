@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-config
+  namespace: default
+  labels:
+    app: quixsi-server
+    component: server
+data:
+  PORT: "8080"
+  LOG_LEVEL: "info"
+  DATABASE_TYPE: "inmemory"
+  # Add other server configuration as needed
