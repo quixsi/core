@@ -41,11 +41,21 @@ export function useUsers() {
         }
     }
 
+    const deleteUser = async (id: string) => {
+        try {
+            await apiService.deleteUser(id)
+            await fetchUsers()
+        } catch (e: any) {
+            error.value = e.message || 'Failed to delete user.'
+        }
+    }
+
     return {
         users,
         loading,
         error,
         fetchUsers,
         createUser,
+        deleteUser,
     }
 }
