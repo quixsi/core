@@ -22,29 +22,16 @@
             <div v-else class="text-gray-500">No users found.</div>
         </template>
         </Card>
+        <CreateUser />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { apiService, type User } from '@/services/api'
+import { onMounted } from 'vue'
 import { Card } from '@quixsi/components'
+import { CreateUser } from './create'
+import { useUsers } from './useUsers'
+const { users, loading, error, fetchUsers } = useUsers()
 
-const users = ref<User[]>([])
-const loading = ref(true)
-const error = ref('')
-
-onMounted(async () => {
-  await fetchUsers()
-})
-
-const fetchUsers = async () => {
-  try {
-    users.value = await apiService.getUsers()
-  } catch (e: any) {
-    error.value = e.message || 'Failed to load users.'
-  } finally {
-    loading.value = false
-  }
-}
+onMounted(fetchUsers)
 </script>
