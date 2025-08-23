@@ -1,60 +1,44 @@
 <script setup lang="ts">
-import { ref, watch, onUnmounted } from 'vue'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '#lib/utils'
 
-const props = defineProps<{
-    message: string
-    type?: 'success' | 'error'
-    duration?: number
-    class?: HTMLAttributes['class']
-    toastKey?: string | number
+defineProps<{
+    toasts: Array<{
+            message: string
+            type?: 'success' | 'error'
+            key: string | number
+            class?: HTMLAttributes['class']
+            duration?: number
+    }>
 }>()
 
-const visible = ref(false)
-let timeout: ReturnType<typeof setTimeout> | null = null
+const emit = defineEmits<{
+    (e: 'remove', key: string | number): void
+}>()
 
-watch(() => props.toastKey, (newKey) => {
-    if (timeout) {
-        clearTimeout(timeout)
-    }
-
-    visible.value = false
-
-    if (!props.message) {
-        return
-    }
-
-    setTimeout(() => {
-        visible.value = true
-        timeout = setTimeout(() => {
-            visible.value = false
-        }, props.duration ?? 3000)
-    }, 10)
-}, { immediate: true })
-
-onUnmounted(() => {
-    if (timeout) {
-        clearTimeout(timeout)
-    }
-})
+const handleRemove = (key: string | number) => {
+    emit('remove', key)
+}
 </script>
 
 <template>
-    <transition name="fade">
-        <div
-            v-if="visible"
-            :key="props.toastKey"
-            data-slot="toast"
-            :class="cn(
-                'fixed z-50 top-8 right-8 px-4 py-2 rounded shadow-lg',
-                type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white',
-                props.class,
-            )"
-        >
-            {{ message }}
-        </div>
-    </transition>
+    <div class="fixed z-50 top-8 right-8 flex flex-col gap-2 items-end">
+        <transition-group name="fade" tag="div">
+            <div
+                v-for="item in toasts"
+                :key="item.key"
+                data-slot="toast"
+                @click="handleRemove(item.key)"
+                :class="cn(
+                    'px-4 py-2 mb-3 rounded shadow-lg cursor-pointer',
+                    item.type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white',
+                    item.class,
+                )"
+            >
+                {{ item.message }}
+            </div>
+        </transition-group>
+    </div>
 </template>
 
 <style scoped>

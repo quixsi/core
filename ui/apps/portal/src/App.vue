@@ -3,16 +3,10 @@ import { RouterView } from 'vue-router'
 import { Toast } from '@quixsi/components'
 import { useToast } from '@/composables/useToast'
 
-const { toast } = useToast()
+const { toasts, removeToast } = useToast()
 </script>
 
 <template>
-  <Toast 
-      v-if="toast.message" 
-      :message="toast.message" 
-      :type="toast.type" 
-      :toastKey="toast.key" 
-      @click="toast.message = ''"
-  />
+  <Toast :toasts="toasts" @remove="removeToast" />
   <RouterView />
 </template>
