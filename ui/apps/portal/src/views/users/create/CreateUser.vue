@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Input, Button } from '@quixsi/components'
-import { useUsers } from '../useUsers'
+import { useUsers } from '@/composables/useUsers'
 
 const newName = ref('')
 const newEmail = ref('')

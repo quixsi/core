@@ -51,7 +51,7 @@
 import { onMounted } from 'vue'
 import { Card } from '@quixsi/components'
 import { CreateUser } from './create'
-import { useUsers } from './useUsers'
+import { useUsers } from '@/composables/useUsers'
 
 const { users, loading, fetchUsers, deleteUser } = useUsers()
 
