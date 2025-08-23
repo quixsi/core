@@ -7,6 +7,8 @@ const error = ref('')
 
 const fetchUsers = async () => {
     loading.value = true
+    error.value = ''
+
     try {
         users.value = await apiService.getUsers()
     } catch (e: any) {
@@ -25,10 +27,16 @@ const createUser = async (name: string, email: string) => {
         if (!email.trim()) {
             throw new Error('Email is required.')
         }
+        
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailRegex.test(email)) {
             throw new Error('Invalid email address.')
         }
+
+        if (users.value.some(u => u.email.toLowerCase() === email.trim().toLowerCase())) {
+            throw new Error('Email is already in use.')
+        }
+        
         await apiService.createUser({ name, email })
         await fetchUsers()
     } catch (e: any) {
@@ -37,6 +45,8 @@ const createUser = async (name: string, email: string) => {
 }
 
 const deleteUser = async (id: string) => {
+    error.value = ''
+    
     try {
         await apiService.deleteUser(id)
         await fetchUsers()
