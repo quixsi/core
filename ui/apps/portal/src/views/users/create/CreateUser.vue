@@ -1,7 +1,6 @@
 <template>
-  <div class="max-w-2xl mx-auto mt-12 flex flex-col gap-2">
+  <div class="max-w-2xl mx-auto mt-2 flex flex-col gap-2">
     <h3 class="text-lg font-semibold mb-2">Create User</h3>
-    <div v-if="error" class="text-red-500 text-sm mt-1">{{ error }}</div>
     <div class="flex gap-2">
         <Input
             v-model="newName"

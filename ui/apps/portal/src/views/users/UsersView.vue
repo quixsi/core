@@ -1,10 +1,9 @@
 <template>
     <div>
         <h1 class="text-2xl font-bold mb-4">Users</h1>
-        <Card class="max-w-2xl mx-auto mt-8">
+        <Card class="max-w-2xl mx-auto my-8">
         <template #content>
             <div v-if="loading" class="mb-4">Loading users...</div>
-            <div v-else-if="error" class="mb-4 text-red-500">{{ error }}</div>
             <table v-if="users.length" class="min-w-full">
             <thead>
                 <tr>
@@ -44,6 +43,7 @@
             <div v-else class="text-gray-500">No users found.</div>
         </template>
         </Card>
+        <div v-if="error" class="max-w-2xl mx-auto mt-8 text-red-500">{{ error }}</div>
         <CreateUser />
     </div>
 </template>
