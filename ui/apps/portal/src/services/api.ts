@@ -25,6 +25,10 @@ export class ApiService {
       throw new Error(`API request failed: ${response.statusText}`)
     }
 
+    if (response.status === 204) {
+      // No content to parse
+      return undefined as T
+    }
     return response.json()
   }
 
