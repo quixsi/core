@@ -1,6 +1,8 @@
 import { ref } from 'vue'
 import { apiService, type User } from '@/services/api'
+import { useToast } from '@/composables/useToast'
 
+const { showSuccess, showError } = useToast()
 const users = ref<User[]>([])
 const loading = ref(true)
 const error = ref('')
@@ -13,6 +15,7 @@ const fetchUsers = async () => {
         users.value = await apiService.getUsers()
     } catch (e: any) {
         error.value = e.message || 'Failed to load users.'
+        showError(error.value)
     } finally {
         loading.value = false
     }
@@ -39,19 +42,23 @@ const createUser = async (name: string, email: string) => {
         
         await apiService.createUser({ name, email })
         await fetchUsers()
+        showSuccess('User created successfully!')
     } catch (e: any) {
         error.value = e.message || 'Failed to create user.'
+        showError(error.value)
     }
 }
 
 const deleteUser = async (id: string) => {
     error.value = ''
-    
+
     try {
         await apiService.deleteUser(id)
         await fetchUsers()
+        showSuccess('User deleted successfully!')
     } catch (e: any) {
         error.value = e.message || 'Failed to delete user.'
+        showError(error.value)
     }
 }
 

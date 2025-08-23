@@ -43,7 +43,6 @@
             <div v-else class="text-gray-500">No users found.</div>
         </template>
         </Card>
-        <div v-if="error" class="max-w-2xl mx-auto mt-8 text-red-500">{{ error }}</div>
         <CreateUser />
     </div>
 </template>
@@ -53,7 +52,8 @@ import { onMounted } from 'vue'
 import { Card } from '@quixsi/components'
 import { CreateUser } from './create'
 import { useUsers } from './useUsers'
-const { users, loading, error, fetchUsers, deleteUser } = useUsers()
+
+const { users, loading, fetchUsers, deleteUser } = useUsers()
 
 onMounted(fetchUsers)
 </script>
